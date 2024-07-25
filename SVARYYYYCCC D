@@ -1,0 +1,100 @@
+local lib = loadstring(game:HttpGet('https://raw.githubusercontent.com/TheoTheEpic/AquaLib/main/AquaLib.lua'))()
+local window = lib.createWindow("Aqua", "Crest Hub™", true) 
+
+local tab1 = window.createTab("Tower Of Hell")
+local section1 = tab1.createSection("Tower of autofarm", false)
+
+section1.createButton("Anti Cheat", function() -- section.AddButton(text, callback)
+    local function DisableSignal(signal, name)
+    local successes = true
+    for i, connection in next, getconnections(signal) do
+        local success, err = pcall(connection.Disable)
+        if success then
+            print('successfully disconnected ' .. name .. '\'s #' .. tostring(i) .. ' connection')
+        else
+            if err then
+                print('failed to disconnect ' .. name .. '\'s # ' .. tostring(i) .. 'connection due to ' .. err)
+            end
+            successes = false
+        end
+    end
+    return successes
+end
+
+local localscript = game:GetService'Players'.LocalPlayer.PlayerScripts.LocalScript
+local localscript2 = game:GetService'Players'.LocalPlayer.PlayerScripts.LocalScript2
+
+local localscriptSignal = localscript.Changed
+local localscript2Signal = localscript2.Changed
+
+if DisableSignal(localscriptSignal, 'localscript') then
+    localscript:Destroy()
+end
+if DisableSignal(localscript2Signal, 'localscript2') then
+    localscript2:Destroy()
+end
+end)
+
+section1.createButton("Infinite Yield", function() -- section.AddButton(text, callback)
+    local thing = Instance.new("Part")
+        thing.Name = "This is a part of the game"
+        thing.Anchored = true
+        thing.Parent = game.Workspace
+        thing.Size = Vector3.new(5, 0.1, 5)
+		thing.Transparency = 1
+	game:GetService("RunService").Stepped:connect(
+            function()
+			local pos = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+        thing.CFrame = CFrame.new(pos.X, pos.Y-3.3,pos.Z)--beetween -3.1 and idk but prob -3.6
+		end)
+end)
+
+section1.createButton("GodMode", function() -- section.AddButton(text, callback)
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+local function Invincibility()
+    if LocalPlayer.Character then
+        for i, v in pairs(LocalPlayer.Character:GetChildren()) do
+            if v.Name == "hitbox" then
+                v:Destroy()
+            end
+        end
+    end
+end
+
+while wait(0.5) do
+    Invincibility(LocalPlayer)
+end
+end)
+
+section1.createButton("Auto Farm", function() -- section.AddButton(text, callback)
+    local P = game:GetService'Players' local HRP = P.LocalPlayer.Character.HumanoidRootPart local Sections = game:GetService("Workspace").tower.sections
+end)
+
+section1.createButton("Delete kill parts", function() -- section.AddButton(text, callback)
+    for i,v in pairs(game:GetService("Workspace").tower:GetDescendants()) do
+    if v:IsA("BoolValue") and v.Name == "kills" then
+        v.Parent:Destroy()
+    end
+end
+end)
+
+section1.createButton("Get Items", function() -- section.AddButton(text, callback)
+    for _,e in pairs(game.Players.LocalPlayer.Backpack:GetDescendants()) do
+if e:IsA("Tool") then
+e:Destroy()
+end
+end
+wait()
+for _,v in pairs(game.ReplicatedStorage.Gear:GetDescendants()) do
+if v:IsA("Tool") then
+local CloneThings = v:Clone()
+wait()
+CloneThings.Parent = game.Players.LocalPlayer.Backpack
+end
+end
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.finishes:GetChildren()[1].CFrame
+end)
+
+section1.createButton("Goto End", function() -- section.AddButton(text, callback)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.finishes:GetChildren()[1].CFrame
+end)
